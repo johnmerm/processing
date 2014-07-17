@@ -2,7 +2,6 @@
 
 //Copyright (c) 2013 Mick Grierson, Matthew Yee-King, Marco Gillies
 
-
 void brush1(float x,float y, float px, float py, float lineWidth) {
   strokeWeight(lineWidth);
   ellipse(x,y,px,py); 

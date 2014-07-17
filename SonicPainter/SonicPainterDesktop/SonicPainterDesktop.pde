@@ -8,15 +8,21 @@ AudioPlayer player;
 AudioPlayer player2;
 
 int brush = 0;
-
 int myHeight;
+int smRectWidth;
 float theta = 0;
 PFont  f;
+
+PImage [] images = new PImage[8];
+int currImageIdx = -1;
 void setup()
 {
-  size(640, 960);
+  size(640, 480);
+  loadPixels();
   
   myHeight = height-60;
+  smRectWidth = width/8;
+  
   maxim = new Maxim(this);
   player = maxim.loadFile("atmos1.wav");
   player.setLooping(true);
@@ -34,9 +40,26 @@ void setup()
 
 void draw()
 {
+  noStroke();
+  fill(0, 255);
+  rect(width/2, height-30, width, 60);
   
+  
+  for (int i=0;i<8;i++){
+    stroke(255,255,255,255);
+    strokeWeight(1);
+    rect((i+0.5)*smRectWidth,height-30,smRectWidth,60);
+    
+    if (images[i] !=null){
+      image(images[i],i*smRectWidth,myHeight,smRectWidth,60);
+    }
+  }
 }
-
+void clearScreen(){
+    noStroke();
+    fill(0, 255);
+    rect(width/2, myHeight/2, width, myHeight);
+}
 void keyPressed(){
   if (key>='0' && key <='8'){
     brush = Integer.parseInt(""+key);
@@ -47,16 +70,25 @@ void keyPressed(){
     textAlign(LEFT);
     text(""+brush,width/2,height/2);  
   }else if (key=='c'){
-    //clear screen
-    noStroke();
-    fill(0, 255);
-    rect(width/2, height/2, width, height);
+    clearScreen();
+  }else if (key =='s'){
+    currImageIdx = (currImageIdx+1) % 8;
+    println("currImageIdx:"+currImageIdx);
+    images[currImageIdx] = createImage(width,myHeight,RGB);
+    images[currImageIdx].loadPixels();
+    loadPixels();
+    
+    for (int i=0;i<width*myHeight;i++){
+      images[currImageIdx].pixels[i] = pixels[i];
+    }
+    images[currImageIdx].updatePixels();
+    updatePixels();
   }
 }
 
 void mouseDragged()
 {
-  if (mouseY<height-60 && pmouseY<height-60){
+  if (mouseY<height-60 && pmouseY<height-60 && mouseY>0 && pmouseY>0){
     player.play();
     player2.play();
     float red = map(mouseX, 0, width, 0, 255);
@@ -131,4 +163,14 @@ void mouseReleased()
 
         
 }
+void mouseClicked(){
+  if (mouseY>myHeight){
+    int frame = mouseX/smRectWidth;
+    if (images[frame] != null){
+      clearScreen();
+      image(images[frame],0,0,width,myHeight);
+    }
+  }
+}
+
 

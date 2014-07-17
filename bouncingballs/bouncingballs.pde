@@ -1,22 +1,30 @@
 import java.util.ArrayList;
 
+import org.jbox2d.util.nonconvex.*;
+import org.jbox2d.dynamics.contacts.*;
+import org.jbox2d.testbed.*;
+import org.jbox2d.collision.*;
+import org.jbox2d.common.*;
+import org.jbox2d.dynamics.joints.*;
+import org.jbox2d.p5.*;
+import org.jbox2d.dynamics.*;
+
 float pi = (float)java.lang.Math.PI;
 
 Shape[] shapes;
 
 String str = "";
 PFont  f;
-
 void setup(){
   size(640,480);
   background(0,0,0);
   ArrayList a = new ArrayList();
-  a.add(new Platform(width/2,height-50));
-  for (int i=0;i<10;i++){
-    float x = random(0,width);
-    float y = random(0,height);
-    float theta =random(0,2*pi);
-    a.add(new Ball(x,y,theta));
+  a.add(new Platform(200,40,width/2,height-50,5));
+  for (int i=0;i<2;i++){
+    float x = random(100,width-100);
+    float y = random(100,height-100);
+    float theta =pi/5;
+    a.add(new Ball(50,x,y,10,theta));
   }
   shapes = (Shape[])a.toArray(new Shape[a.size()]);
   
@@ -41,7 +49,6 @@ void checkCollisions(){
       Shape other = shapes[j];
       if (one.checkCollision(other)){
         one.afterCollision(other);
-        other.afterCollision(one);
       }
     }
   }
@@ -55,6 +62,7 @@ void draw(){
     s.draw();
     
   }
+  
 }
 
 void mousePressed(){
