@@ -35,32 +35,7 @@ class Platform implements Shape{
     return body;
   }
   
-  boolean checkCollision(Shape s){
-    if (s == null){
-      // Check collision against the borders
-      return (x >= width-p_width/2 || x<=p_width/2);
-    }else if (s instanceof Ball){
-      return s.checkCollision(this);
-    }
-    return false;
-  }
   
-  void afterCollision(Shape s){
-   if (s == null){
-     // Collision against the borders
-     v = -v;  
-   }else if (s instanceof Ball){
-     s.afterCollision(this);
-   }
-  }
-  void next(){
-    /*
-    px = x;
-    py = y;
-    
-    x += v;
-    */
-  }
   
   PFont  f;
   void draw(){

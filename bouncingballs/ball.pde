@@ -33,97 +33,34 @@ class Ball implements Shape{
     return body;
   }
   
-  void next(){
-    /*
-    px = x;
-    py = y;
-    
-    theta = theta % (2*pi);
-    
-    
-    float dx = cos(theta)*v;
-    float dy = sin(theta)*v;
-    
-    x += dx;
-    y += dy;
-    */
-
-  }
-  boolean checkCollision(Shape s){
-    if (s==null){
-      //Check collision with the borders
-      return (x >= width-diameter/2 || x <= diameter/2 || y >= height-diameter/2 || y <= diameter/2);
-    }else { 
-      if (s == this){
-        throw new RuntimeException("checkCollision with self!!!!");
-      }else{
-        if (s instanceof Platform){
-          float sx = ((Platform)s).x;  
-          float sy = ((Platform)s).y;
-          float sw = ((Platform)s).p_width;  
-          float sh = ((Platform)s).p_height;
-          
-          return (abs(x-sx)<= (sw+diameter)/2 && abs(y-sy)<=(sh+diameter)/2);
-        }else if (s instanceof Ball){
-          float sx = ((Ball)s).x;  
-          float sy = ((Ball)s).y;
-          
-          return (abs(x-sx)<= diameter && (abs(y-sy)<=diameter));
-        }else{
-          throw new RuntimeException("What shape is this? "+s.getClass());
-        }
-      }
-    }
-  }
-  
-  void afterCollision(Shape s){
-    if (s == null){
-      if ((x >= width-diameter/2 || x <= diameter/2) && (y >= height-diameter/2 || y <= diameter/2)){
-        theta =  pi+ theta;
-      }else if (x >= width-diameter/2 || x <= diameter/2){
-        theta  = pi - theta;
-      }else if (y >= height-diameter/2 || y <= diameter/2){
-        theta = 2*pi - theta;
-      }
-    }else if (s instanceof Platform){
-      float sx = ((Platform)s).x;  
-      float sy = ((Platform)s).y;
-      float sw = ((Platform)s).p_width;  
-      float sh = ((Platform)s).p_height;
-      if (abs(x-sx) - (sw+diameter)/2 > abs(y-sy) - (sh+diameter)/2){
-        theta  = pi - theta;
-      }else if (abs(x-sx) - (sw+diameter)/2 < abs(y-sy) - (sh+diameter)/2){
-        theta = 2*pi - theta;
-        //theta =  pi+ theta;
-      }else{
-        //theta =  pi+ theta;
-        theta = 2*pi - theta;
-      }
-    }else if (s instanceof Ball){
-      theta  = pi - theta;
-      ((Ball)s).theta =pi - ((Ball)s).theta; 
-    }
-  }
   
   
   
-  void draw(){
-    /*
-    stroke(0,0,0);
-    fill(0,0,0);
-    ellipse(px,py,diameter,diameter);
-    stroke(0,0,0);
-    fill(100,100,100);  
-    ellipse(x,y,diameter,diameter);
-    */
+  
+  
+  
+ PFont f; 
+ void draw(){
     Vec2 pos = physics.worldToScreen(body.getWorldCenter());
     float angle = physics.getAngle(body);
     pushMatrix();
       translate(pos.x,pos.y);
       rotate(-angle);
-      stroke(0,0,0);
+      noStroke();
       fill(100,100,100);  
       ellipse(0,0,diameter,diameter);
+      stroke(255,255,255);
+      strokeWeight(1);
+      line(0,-diameter/2,0,diameter/2);
+      line(-diameter/2,0,diameter/2,0);
+      /*
+      if (f == null){
+        f = createFont("Arial",16,true);
+      }
+      textFont(f,16);        
+      textAlign(LEFT);
+      text(""+degrees(angle),20,20);
+      */
     popMatrix();  
     
   }

@@ -19,7 +19,8 @@ PFont  f;
 Physics physics;
 GameHandler handler; 
 void setup(){
-  size(displayWidth,displayHeight);
+  //size(displayWidth,displayHeight);
+  size(640,480);
   if (frame !=null){
     frame.setResizable(true);
   }
@@ -42,39 +43,12 @@ void setup(){
 
 
 
-void checkCollisions(){
-  //Check collision of each object against each other & the border
-  for (int i=0;i<shapes.length;i++){
-    Shape one =  shapes[i];
-    if (one.checkCollision(null)){
-      one.afterCollision(null);
-    }
-    
-    for (int j=i+1;j<shapes.length;j++){
-      //1 will check agaianst 2,3,4,5,6
-      //2 will cjeck against 3,4,5,6
-      // ...
-      Shape other = shapes[j];
-      if (one.checkCollision(other)){
-        one.afterCollision(other);
-      }
-    }
-  }
-}
 void draw(){
-  /*
-  checkCollisions();
-  String str = "";
-  for (Shape s:shapes){
-    s.next();
-    
-    s.draw();
-    */
-    
-    //Just clear the screen
+    //clear the screen
     rectMode(CENTER);
     fill(0,0,0);
     rect(width/2,height/2,width,height);
+    //Draw them all
     for (Shape s:shapes){
       s.draw();
     }
@@ -83,24 +57,12 @@ void draw(){
 
 
 void mousePressed(){
+  handler.mousePressed();  
   
-  for (Shape s:shapes){
-    str += s.toString()+"\n";
-  }
-  
-  fill(255,255,255);
-  textFont(f,16);        
-  textAlign(LEFT);
-  text(str,mouseX,mouseY);
 }
 
 void mouseReleased(){
-  fill(0,0,0);
-  textFont(f,16);        
-  textAlign(LEFT);
-  text(str,mouseX,mouseY);
-  
-  str = "";
+  handler.mouseReleased();
 }
 
 

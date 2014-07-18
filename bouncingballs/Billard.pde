@@ -1,4 +1,10 @@
-class Billard extends GameHandler{
+class Billard extends GameHandler {
+  private Ball striker;
+  Billard(Physics physics){
+   super(physics);
+   physics.getWorld().setContactListener(this);
+  }
+  
   Shape[] getSceneSetup(){
       physics.setRestitution(1);
       ArrayList a = new ArrayList();
@@ -11,8 +17,21 @@ class Billard extends GameHandler{
         }
        
       }
-      a.add(new Ball(physics,r,width/2-300,height/2,20,0.01));
+      
+      striker = new Ball(physics,r,width/2-300,height/2,0,0); 
+      a.add(striker);
       return (Shape[])a.toArray(new Shape[a.size()]);
   }
+  int px,py;
+  void mousePressed(){
+    px = mouseX;
+    py = mouseY;
+  }
+  void mouseReleased(){
+     Vec2 impulse = new Vec2(mouseX-px,py-mouseY);
+     Vec2 center = new Vec2(px,py);
+     striker.getBody().applyImpulse(impulse,center);
+   }
+   
 }
 

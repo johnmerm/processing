@@ -1,4 +1,8 @@
 class Bouncer extends GameHandler{
+  Bouncer(Physics physics){
+   super(physics);
+  }
+  
   Shape[] getSceneSetup(){
     ArrayList a = new ArrayList();
     physics.setRestitution(0);
