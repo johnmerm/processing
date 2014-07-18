@@ -15,18 +15,26 @@ Shape[] shapes;
 
 String str = "";
 PFont  f;
+
+Physics physics;
+GameHandler handler; 
 void setup(){
-  size(640,480);
-  background(0,0,0);
-  ArrayList a = new ArrayList();
-  a.add(new Platform(200,40,width/2,height-50,5));
-  for (int i=0;i<2;i++){
-    float x = random(100,width-100);
-    float y = random(100,height-100);
-    float theta =pi/5;
-    a.add(new Ball(50,x,y,10,theta));
+  size(displayWidth,displayHeight);
+  if (frame !=null){
+    frame.setResizable(true);
   }
-  shapes = (Shape[])a.toArray(new Shape[a.size()]);
+  background(0,0,0);
+  
+  physics = new Physics(this, width, height, 0, -10, width*2, height*2, width, height, 10);
+  physics.setDensity(1.0);
+  physics.setFriction(0);
+  
+  physics.getWorld().setGravity(new Vec2(0,0));
+  handler = new Billard(physics);
+  
+  shapes = handler.getSceneSetup();
+  
+  
   
   
   f = createFont("Arial",16,true);
@@ -54,16 +62,25 @@ void checkCollisions(){
   }
 }
 void draw(){
+  /*
   checkCollisions();
   String str = "";
   for (Shape s:shapes){
     s.next();
     
     s.draw();
+    */
     
+    //Just clear the screen
+    rectMode(CENTER);
+    fill(0,0,0);
+    rect(width/2,height/2,width,height);
+    for (Shape s:shapes){
+      s.draw();
+    }
   }
   
-}
+
 
 void mousePressed(){
   

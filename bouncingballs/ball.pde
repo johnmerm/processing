@@ -1,22 +1,40 @@
 import java.lang.RuntimeException;
-
+import org.jbox2d.util.nonconvex.*;
+import org.jbox2d.dynamics.contacts.*;
+import org.jbox2d.testbed.*;
+import org.jbox2d.collision.*;
+import org.jbox2d.common.*;
+import org.jbox2d.dynamics.joints.*;
+import org.jbox2d.p5.*;
+import org.jbox2d.dynamics.*;
 
 class Ball implements Shape{
+  Physics physics;
+  Body body;
   float diameter = 10;
   float px,py;
   float x,y;
   float v = 10;
   float theta;
-  Ball(float diameter,float x,float y,float v,float theta){
-    
+  Ball(Physics p,float diameter,float x,float y,float v,float theta){
+    this.physics = p;
     this.diameter = diameter;
     this.x = x;
     this.y = y;
     this.v = v;
     this.theta = theta;
+    this.body = physics.createCircle(x,y,diameter/2);
+    
+    Vec2 linVelocity = new Vec2(v*cos(theta),v*sin(theta));
+    this.body.setLinearVelocity(linVelocity);
+   
+  }
+  Body getBody(){
+    return body;
   }
   
   void next(){
+    /*
     px = x;
     py = y;
     
@@ -28,6 +46,7 @@ class Ball implements Shape{
     
     x += dx;
     y += dy;
+    */
 
   }
   boolean checkCollision(Shape s){
@@ -89,12 +108,24 @@ class Ball implements Shape{
   
   
   void draw(){
+    /*
     stroke(0,0,0);
     fill(0,0,0);
     ellipse(px,py,diameter,diameter);
     stroke(0,0,0);
     fill(100,100,100);  
     ellipse(x,y,diameter,diameter);
+    */
+    Vec2 pos = physics.worldToScreen(body.getWorldCenter());
+    float angle = physics.getAngle(body);
+    pushMatrix();
+      translate(pos.x,pos.y);
+      rotate(-angle);
+      stroke(0,0,0);
+      fill(100,100,100);  
+      ellipse(0,0,diameter,diameter);
+    popMatrix();  
+    
   }
   
   String toString(){
