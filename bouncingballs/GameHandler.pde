@@ -2,6 +2,7 @@ abstract class GameHandler implements ContactListener{
   protected Physics physics;
   protected GameHandler(Physics physics){
     this.physics = physics;
+    physics.getWorld().setContactListener(this);
   }
   
   abstract Shape[] getSceneSetup();

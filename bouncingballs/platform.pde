@@ -8,6 +8,8 @@ import org.jbox2d.p5.*;
 import org.jbox2d.dynamics.*;
 
 class Platform implements Shape{
+  
+  
   float x,y;
   float px,py;
   
@@ -29,13 +31,16 @@ class Platform implements Shape{
     
     Vec2 linVelocity = new Vec2(v*cos(theta),v*sin(theta));
     this.body.setLinearVelocity(linVelocity);
+    index.put(this.body,this);
   }
   
   Body getBody(){
     return body;
   }
   
-  
+  Shape getShapeOfBody(Body b){
+    return (Shape)index.get(b);
+  }
   
   PFont  f;
   void draw(){

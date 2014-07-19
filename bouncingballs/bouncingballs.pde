@@ -18,6 +18,9 @@ PFont  f;
 
 Physics physics;
 GameHandler handler; 
+
+Maxim maxim = new Maxim(this);
+
 void setup(){
   //size(displayWidth,displayHeight);
   size(640,480);
@@ -27,10 +30,7 @@ void setup(){
   background(0,0,0);
   
   physics = new Physics(this, width, height, 0, -10, width*2, height*2, width, height, 10);
-  physics.setDensity(1.0);
-  physics.setFriction(0);
   
-  physics.getWorld().setGravity(new Vec2(0,0));
   handler = new Billard(physics);
   
   shapes = handler.getSceneSetup();
@@ -63,6 +63,10 @@ void mousePressed(){
 
 void mouseReleased(){
   handler.mouseReleased();
+}
+
+void keyPressed(){
+  handler.keyPressed();
 }
 
 

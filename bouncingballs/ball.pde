@@ -8,7 +8,13 @@ import org.jbox2d.dynamics.joints.*;
 import org.jbox2d.p5.*;
 import org.jbox2d.dynamics.*;
 
+import java.util.HashMap;
+
+static HashMap index = new HashMap();
 class Ball implements Shape{
+  
+  
+  
   Physics physics;
   Body body;
   float diameter = 10;
@@ -16,8 +22,10 @@ class Ball implements Shape{
   float x,y;
   float v = 10;
   float theta;
-  Ball(Physics p,float diameter,float x,float y,float v,float theta){
+  color c;
+  Ball(Physics p,color c,float diameter,float x,float y,float v,float theta){
     this.physics = p;
+    this.c = c;
     this.diameter = diameter;
     this.x = x;
     this.y = y;
@@ -27,6 +35,8 @@ class Ball implements Shape{
     
     Vec2 linVelocity = new Vec2(v*cos(theta),v*sin(theta));
     this.body.setLinearVelocity(linVelocity);
+    
+    index.put(body,this);
    
   }
   Body getBody(){
@@ -46,8 +56,8 @@ class Ball implements Shape{
     pushMatrix();
       translate(pos.x,pos.y);
       rotate(-angle);
-      noStroke();
-      fill(100,100,100);  
+      stroke(c);
+      fill(c);  
       ellipse(0,0,diameter,diameter);
       stroke(255,255,255);
       strokeWeight(1);
