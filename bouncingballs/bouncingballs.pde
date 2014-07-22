@@ -1,15 +1,4 @@
-import java.util.ArrayList;
-
-import org.jbox2d.util.nonconvex.*;
-import org.jbox2d.dynamics.contacts.*;
-import org.jbox2d.testbed.*;
-import org.jbox2d.collision.*;
-import org.jbox2d.common.*;
-import org.jbox2d.dynamics.joints.*;
-import org.jbox2d.p5.*;
-import org.jbox2d.dynamics.*;
-
-float pi = (float)java.lang.Math.PI;
+float pi = 3.1415;
 
 Shape[] shapes;
 
@@ -19,18 +8,17 @@ PFont  f;
 Physics physics;
 GameHandler handler; 
 
-Maxim maxim = new Maxim(this);
+//Minim maxim = new Minim(this);
 
 void setup(){
-  //size(displayWidth,displayHeight);
-  size(640,480);
-  if (frame !=null){
-    frame.setResizable(true);
-  }
+  size(displayWidth,displayHeight);
+  //size(640,480);
+  
+  
   background(0,0,0);
   
   physics = new Physics(this, width, height, 0, -10, width*2, height*2, width, height, 10);
-  
+  physics.setCustomRenderingMethod(this,"renderShapes");
   handler = new Billard(physics);
   
   shapes = handler.getSceneSetup();
@@ -42,16 +30,19 @@ void setup(){
 }
 
 
+void renderShapes(World world){
+      //Draw them all
+    for (Shape s:shapes){
+      s.draw();
+    }
+
+}
 
 void draw(){
     //clear the screen
     rectMode(CENTER);
     fill(0,0,0);
     rect(width/2,height/2,width,height);
-    //Draw them all
-    for (Shape s:shapes){
-      s.draw();
-    }
   }
   
 

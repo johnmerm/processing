@@ -1,11 +1,3 @@
-import org.jbox2d.util.nonconvex.*;
-import org.jbox2d.dynamics.contacts.*;
-import org.jbox2d.testbed.*;
-import org.jbox2d.collision.*;
-import org.jbox2d.common.*;
-import org.jbox2d.dynamics.joints.*;
-import org.jbox2d.p5.*;
-import org.jbox2d.dynamics.*;
 
 class Platform implements Shape{
   
@@ -31,16 +23,14 @@ class Platform implements Shape{
     
     Vec2 linVelocity = new Vec2(v*cos(theta),v*sin(theta));
     this.body.setLinearVelocity(linVelocity);
-    index.put(this.body,this);
+    
   }
   
   Body getBody(){
     return body;
   }
   
-  Shape getShapeOfBody(Body b){
-    return (Shape)index.get(b);
-  }
+  
   
   PFont  f;
   void draw(){
@@ -64,21 +54,17 @@ class Platform implements Shape{
       translate(pos.x,pos.y);
       rotate(-angle);
       rectMode(CENTER);
-//      stroke(0,0,0);
-//      fill(100,100,100);  
-//      rect(0,0,p_width,p_height);
-//      stroke(255);
-//      strokeWeight(10); 
-//      point(0,0);
+      stroke(0,0,0);
+      fill(100,100,100);  
+      rect(0,0,p_width,p_height);
+
       strokeWeight(1);
-      line(0,0,0,p_height/2);
-      line(0,0,p_width/2,0);
+      line(0,-p_height/2,0,p_height/2);
+      line(-p_width/2,0,p_width/2,0);
       if (f == null){
         f = createFont("Arial",16,true);
       }
-      textFont(f,16);        
-      textAlign(LEFT);
-      text(""+angle,20,20);
+      
       
     popMatrix();
   }

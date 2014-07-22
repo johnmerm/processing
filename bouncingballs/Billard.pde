@@ -1,7 +1,7 @@
 class Billard extends GameHandler {
   private Ball striker;
 
-  AudioPlayer[] chicks;
+  //AudioPlayer[] chicks;
   int aChick = 0;
   Billard(Physics physics){
    super(physics);
@@ -42,14 +42,14 @@ class Billard extends GameHandler {
        
       }
       
-      striker = new Ball(physics,color(255,255,255),r,width/2-300,height/2,0,0); 
+      striker = new Ball(physics,color(255,255,255),r,width/4,height/2,0,0); 
       a.add(striker);
       
-      chicks = new AudioPlayer[a.size()];
-      for (int i=0;i<chicks.length;i++){
-         chicks[i] = maxim.loadFile("chick.wav");
-         chicks[i].setLooping(false);
-       }
+      //chicks = new AudioPlayer[a.size()];
+      //for (int i=0;i<chicks.length;i++){
+         //chicks[i] = maxim.loadFile("chick.wav");
+         //chicks[i].setLooping(false);
+       //}
       return (Shape[])a.toArray(new Shape[a.size()]);
   }
   int px,py;
@@ -67,9 +67,9 @@ class Billard extends GameHandler {
      super.result(r);
      if (r.shape1.getBody().getMass()*r.shape2.getBody().getMass() !=0){
        //don't play sound when collidimg with wall
-       aChick = (aChick+1)%chicks.length;
-       chicks[aChick].cue(0);
-       chicks[aChick].play();
+       //aChick = (aChick+1)%chicks.length;
+       //chicks[aChick].cue(0);
+       //chicks[aChick].play();
      }
    }
 }

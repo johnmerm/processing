@@ -1,6 +1,6 @@
 class Bouncer extends GameHandler{
   
-  AudioPlayer ding = maxim.loadFile("ding.wav");
+  //AudioPlayer ding = maxim.loadFile("ding.wav");
   
   
   Bouncer(Physics physics){
@@ -30,7 +30,7 @@ class Bouncer extends GameHandler{
     
     pp = ((Shape)a.get(0)).getBody();
     
-    ding.setLooping(false);
+    //ding.setLooping(false);
     return (Shape[])a.toArray(new Shape[a.size()]);
   }
   
@@ -56,8 +56,8 @@ class Bouncer extends GameHandler{
     super.result(p);
     println(p.shape1.getBody().getMass()+" "+p.shape2.getBody().getMass());
     if (p.shape1.getBody().getMass()<20.0 && p.shape2.getBody().getMass() < 20.0){ 
-      ding.cue(0);
-      ding.play();
+      //ding.cue(0);
+      //ding.play();
     }
   }
 }

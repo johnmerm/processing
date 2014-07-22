@@ -1,16 +1,3 @@
-import java.lang.RuntimeException;
-import org.jbox2d.util.nonconvex.*;
-import org.jbox2d.dynamics.contacts.*;
-import org.jbox2d.testbed.*;
-import org.jbox2d.collision.*;
-import org.jbox2d.common.*;
-import org.jbox2d.dynamics.joints.*;
-import org.jbox2d.p5.*;
-import org.jbox2d.dynamics.*;
-
-import java.util.HashMap;
-
-static HashMap index = new HashMap();
 class Ball implements Shape{
   
   
@@ -36,7 +23,7 @@ class Ball implements Shape{
     Vec2 linVelocity = new Vec2(v*cos(theta),v*sin(theta));
     this.body.setLinearVelocity(linVelocity);
     
-    index.put(body,this);
+    
    
   }
   Body getBody(){
